@@ -2,18 +2,80 @@
 
 <head>
 	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="./style.css" />
+	<link href="https://fonts.googleapis.com/css?family=Pacifico&display=swap" rel="stylesheet" />
+	
 	<script>
-		// TODO: create a handler
+		let actions = {
+			"google": "https://www.google.com/",
+			"duckDuckGo": "https://www.duckduckgo.com/",
+			"bing": "https://www.bing.com/",
+			"ask": "https://www.ask.com/"
+		};
+
+		function setSearchEngine() {
+			let form = document.getElementById("searchForm");
+			let query = document.getElementById("q");
+			let searchButton = document.querySelector("input[name=engine]:checked");
+			
+			// Bonus Mission Part 1 -- Add Validation
+			
+			// Option 1: Use Window Alert
+			// if (query.value.trim() === '') {
+			// 	alert("Oops!  You didn't enter a search term.");
+			// 	event.preventDefault();
+			// } else if (!searchButton) {
+			// 	alert("Oops!  You didn't select a search engine.");
+			// 	event.preventDefault();
+			// }
+			
+			// Option 2: Use an error box on the page with text
+			const errorBox = document.getElementById('error-box');
+			const errorMsg = document.getElementById('error-msg');
+
+			if (query.value.trim() === '') {
+				errorMsg.innerHTML = "Oops!  You didn't enter a search term.";
+				errorBox.style.visibility = "visible";
+				event.preventDefault();
+			} else if (!searchButton) {
+				errorMsg.innerHTML = "Oops!  You didn't select a search engine.";
+				errorBox.style.visibility = "visible";
+				event.preventDefault();
+			} else {
+				errorBox.style.visibility = "hidden";
+			}
+
+			let url = actions[searchButton.value];
+			form.action = url;
+		}
+
     window.addEventListener("load", function(){
-        // TODO: register the handler
+		let form = document.getElementById("searchForm");
+		form.addEventListener("submit", setSearchEngine);
     });
 	</script>
 </head>
 
 <body>
+	<h1>Duo Got What You Need Baby</h1>
 
-	<form id="searchForm">
+	<div id="search-bar">
+		<p id="search-header">Any search you want!</p>
+		
+		<form id="searchForm">
     <!-- TODO: add form elements -->
+		<input type="text" id="q" name="q" />
+		<label><input type="radio" name="engine" value="google" /> Google</label>
+		<label><input type="radio" name="engine" value="duckDuckGo" /> DuckDuckGo</label>
+		<label><input type="radio" name="engine" value="bing" /> Bing</label>
+		<label><input type="radio" name="engine" value="ask" /> Ask</label>
+		<button>Go!</button>
 	</form>
+	</div>
+
+	<!-- Bonus Mission Part 1, Option 2 -->
+	<div id="error-box">
+		<p id="error-msg"></p>
+	</div>
 
 </body>
